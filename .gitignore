@@ -1,0 +1,12 @@
+target/
+.idea/
+.classpath
+.project
+.settings/
+*.class
+*.jar
+*.log
+.DS_Store
+*.iml
+Scripting_Java_Selenium.iml
+

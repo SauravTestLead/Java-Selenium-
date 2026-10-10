@@ -1,0 +1,14 @@
+<suite name="TestSuite">
+
+    <test name="LoginTest">
+
+        <parameter name="username" value="admin"/>
+        <parameter name="password" value="1234"/>
+
+        <classes>
+            <class name="TestNG_Interview.ParameterTest"/>
+        </classes>
+
+    </test>
+
+</suite>

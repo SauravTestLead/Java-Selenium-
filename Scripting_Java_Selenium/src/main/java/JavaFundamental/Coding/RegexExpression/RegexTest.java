@@ -1,0 +1,16 @@
+package JavaFundamental.Coding.RegexExpression;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexTest {
+    public static void main(String [] args){
+        String input = "cat bat mat";
+        String Regex = "[cm]at";
+        Pattern p = Pattern.compile(Regex);
+        Matcher m = p.matcher(input);
+        while(m.find()){
+            System.out.println(m.group());
+        }
+    }
+}

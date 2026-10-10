@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced UI Actions Demo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .container {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 15px;
+            width: 70%;
+            margin: auto;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.5);
+        }
+
+        select {
+            padding: 8px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 15px;
+        }
+
+        /* Hover Box */
+        .hover-box {
+            margin: 20px auto;
+            padding: 15px;
+            width: 200px;
+            background-color: orange;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .hover-box:hover {
+            background-color: red;
+            transform: scale(1.1);
+        }
+
+        /* Drag Drop */
+        #dragItem {
+            width: 100px;
+            height: 100px;
+            background-image: url('https://picsum.photos/100');
+            background-size: cover;
+            border-radius: 10px;
+            cursor: grab;
+            margin: 20px auto;
+        }
+
+        #dropZone {
+            width: 200px;
+            height: 200px;
+            border: 3px dashed white;
+            margin: 20px auto;
+            line-height: 200px;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+
+        #dropZone.hovered {
+            background-color: rgba(255,255,255,0.3);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>Complete UI Practice Page</h1>
+
+<div class="container">
+
+    <!-- Single Dropdown -->
+    <h3>Single Select Dropdown</h3>
+    <select>
+        <option>Select Country</option>
+        <option>India</option>
+        <option>USA</option>
+        <option>UK</option>
+    </select>
+
+    <!-- Multiple Dropdown -->
+    <h3>Multiple Select Dropdown</h3>
+    <select multiple size="4">
+        <option>Java</option>
+        <option>Selenium</option>
+        <option>TestNG</option>
+        <option>Cucumber</option>
+    </select>
+
+    <!-- Dynamic Dropdown -->
+    <h3>Dynamic Dropdown (Country → State → City)</h3>
+
+    <select id="country" onchange="loadStates()">
+        <option value="">Select Country</option>
+        <option value="india">India</option>
+        <option value="usa">USA</option>
+    </select>
+
+    <select id="state" onchange="loadCities()">
+        <option value="">Select State</option>
+    </select>
+
+    <select id="city">
+        <option value="">Select City</option>
+    </select>
+
+    <!-- Hover -->
+    <h3>Mouse Hover</h3>
+    <div class="hover-box">Hover Over Me</div>
+
+    <!-- Drag & Drop -->
+    <h3>Drag & Drop</h3>
+    <div id="dragItem" draggable="true"></div>
+    <div id="dropZone">Drop Here</div>
+
+</div>
+
+<script>
+
+    // Dynamic Dropdown Data
+    const data = {
+        india: {
+            karnataka: ["Bangalore", "Mysore"],
+            maharashtra: ["Mumbai", "Pune"]
+        },
+        usa: {
+            california: ["Los Angeles", "San Diego"],
+            texas: ["Dallas", "Austin"]
+        }
+    };
+
+    function loadStates() {
+        const country = document.getElementById("country").value;
+        const stateDropdown = document.getElementById("state");
+        const cityDropdown = document.getElementById("city");
+
+        stateDropdown.innerHTML = "<option value=''>Select State</option>";
+        cityDropdown.innerHTML = "<option value=''>Select City</option>";
+
+        if (country) {
+            Object.keys(data[country]).forEach(state => {
+                stateDropdown.innerHTML += `<option value="${state}">${state}</option>`;
+            });
+        }
+    }
+
+    function loadCities() {
+        const country = document.getElementById("country").value;
+        const state = document.getElementById("state").value;
+        const cityDropdown = document.getElementById("city");
+
+        cityDropdown.innerHTML = "<option value=''>Select City</option>";
+
+        if (country && state) {
+            data[country][state].forEach(city => {
+                cityDropdown.innerHTML += `<option>${city}</option>`;
+            });
+        }
+    }
+
+    // Drag & Drop
+    const dragItem = document.getElementById("dragItem");
+    const dropZone = document.getElementById("dropZone");
+
+    dragItem.addEventListener("dragstart", function(event) {
+        event.dataTransfer.setData("text", event.target.id);
+    });
+
+    dropZone.addEventListener("dragover", function(event) {
+        event.preventDefault();
+        dropZone.classList.add("hovered");
+    });
+
+    dropZone.addEventListener("dragleave", function() {
+        dropZone.classList.remove("hovered");
+    });
+
+    dropZone.addEventListener("drop", function(event) {
+        event.preventDefault();
+        dropZone.appendChild(dragItem);
+        dropZone.classList.remove("hovered");
+        dropZone.innerHTML = "";
+        dropZone.appendChild(dragItem);
+    });
+
+</script>
+
+</body>
+</html>

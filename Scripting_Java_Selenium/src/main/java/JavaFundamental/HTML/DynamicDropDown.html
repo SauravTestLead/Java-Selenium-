@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Dropdown Example</title>
+    <script>
+        function updateCities() {
+
+            var country = document.getElementById("country").value;
+            var cityDropdown = document.getElementById("city");
+
+            // Clear previous options
+            cityDropdown.innerHTML = "";
+
+            var cities = [];
+
+            if (country === "India") {
+                cities = ["Delhi", "Mumbai", "Bangalore"];
+            }
+            else if (country === "USA") {
+                cities = ["New York", "Chicago", "Los Angeles"];
+            }
+            else if (country === "UK") {
+                cities = ["London", "Manchester", "Liverpool"];
+            }
+
+            // Create new options
+            for (var i = 0; i < cities.length; i++) {
+                var option = document.createElement("option");
+                option.value = cities[i];
+                option.text = cities[i];
+                cityDropdown.appendChild(option);
+            }
+        }
+    </script>
+</head>
+<body style="text-align:center; margin-top:100px; font-family:Arial;">
+
+<h2>Dynamic Dropdown Example</h2>
+
+<!-- First Dropdown -->
+<label>Select Country:</label>
+<select id="country" onchange="updateCities()">
+    <option value="">--Select Country--</option>
+    <option value="India">India</option>
+    <option value="USA">USA</option>
+    <option value="UK">UK</option>
+</select>
+
+<br><br>
+
+<!-- Second Dropdown -->
+<label>Select City:</label>
+<select id="city">
+    <option value="">--Select City--</option>
+</select>
+
+</body>
+</html>
